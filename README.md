@@ -2,7 +2,7 @@
 
 ## Goals
 
-Create a self-compiling compiler. The language will be a dialect of C.
+Create a self-compiling compiler. The language will be a dialect of C. It is bootstrapped in C.
 
 ## Dependencies
 
