@@ -1,11 +1,11 @@
 CC = gcc
-CFLAGS = -O2 -Wall -Wextra -pedantic -ggdb -I src
+CFLAGS = -O2 -Wall -Wextra -pedantic -ggdb -I ${SRC_DIR}
 
 TARGET    = ${BUILD_DIR}/main
 
 BUILD_DIR = build
 OBJ_DIR   = ${BUILD_DIR}/obj
-SRC_DIR   = src
+SRC_DIR   = src/bootstrap
 
 C_SRCS = $(shell find ${SRC_DIR} -type f -name "*.c")
 C_OBJS = $(patsubst ${SRC_DIR}/%.c,${OBJ_DIR}/%.o,${C_SRCS})
