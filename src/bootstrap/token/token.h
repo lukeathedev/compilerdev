@@ -6,7 +6,12 @@
 
 typedef enum {
   TK_NULL,
-  TK_PLUS
+  TK_PLUS,
+  TK_MINUS,
+  TK_STAR,
+  TK_SLASH,
+  TK_INT,
+  TK_UNK, // unknown token
 } TK_TYPE;
 
 typedef struct {

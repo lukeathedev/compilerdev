@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "typedef.h"
 
@@ -7,46 +8,45 @@
 #include "node/test.h"
 #include "token/token.h"
 
+#include "lex/lex.h"
+
 i32 main() {
-  // FILE IO -------------------
   // FILE* fp = fopen("build/gv/ast.dot", "w");
   // if (fp == NULL) {
   //   perror("Could not open file 'build/gv/ast.dot'");
   //   exit(-1);
   // }
 
-  TK_LIST* tokens = tokensinit();
-  tokenmk(tokens, TK_NULL, "test00");
-  tokenmk(tokens, TK_NULL, "test01");
-  tokenmk(tokens, TK_PLUS, "test02");
-  tokenmk(tokens, TK_NULL, "test03");
-  tokenmk(tokens, TK_NULL, "test04");
-  tokenmk(tokens, TK_NULL, "test05");
-  tokenmk(tokens, TK_NULL, "test06");
+  // char* source = "3 * 2 + 1"; // =7 (with prec), =9 (without)
+  char* source = "10 * 10 - 4 + 3 * 2 / 2";
+
+  clock_t start = clock();
+
+  TK_LIST* tokens = lex(source);
+  if (!tokens || !tokens->tks) {
+    fprintf(stderr, "[ERROR] Could not generate tokens\n");
+    exit(-1);
+  }
+
+  NODE* ast_root = nd_ex02();
+  if (!ast_root) {
+    fprintf(stderr, "[ERROR] Failed to generate AST\n");
+    exit(-2);
+  }
+
+  clock_t end = clock();
 
   tokensgviz(tokens, stdout);
+  printf("\n");
+  nodegviz(ast_root, stdout);
 
+  f64 exec_time = (f64) (end - start) / CLOCKS_PER_SEC;
+  printf("\n[INFO]  Done in %.6fs\n", exec_time);
+
+  // Cleanup --------------------
+
+  nodefree(ast_root);
   tokensfree(tokens);
-
-
-  // const char* source = "3 * 2 + 2";
-
-  // TOKEN* tk_root = lex((char* ) source);
-  // if (!tk_root) {
-  //   exit(-1);
-  // }
-  // tokengviz(tk_root, stdout);
-  // return 0; 
-
-  // NODE* nd_root = nd_ex02();
-  // // NODE* nd_root = parse(tk_root);
-  // if (!nd_root) {
-  //   exit(-2);
-  // }
-  // nodegviz(nd_root, stdout);
-
-  // nodefree(nd_root);
-  // tokenfree(tk_root);
 
   // fclose(fp);
   return 0;

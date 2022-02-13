@@ -3,6 +3,6 @@
 
 #include "token/token.h"
 
-TOKEN* lex(char* source);
+TK_LIST* lex(char* source);
 
 #endif

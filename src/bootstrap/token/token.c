@@ -26,14 +26,18 @@ void tokenmk(TK_LIST* tokens, TK_TYPE type, char* data) {
   tokens->len += 1;
 }
 
+// Remember to free used buffer!
 char* token_get_type(TOKEN* token) {
   char* dest = malloc(DATA_SZ);
-
   #define s(str) strncpy(dest, str, DATA_SZ - 1)
 
   switch (token->type) {
-    case TK_NULL: s("TK_NULL"); break;
-    case TK_PLUS: s("TK_PLUS"); break;
+    case TK_NULL:  s("TK_NULL");  break;
+    case TK_PLUS:  s("TK_PLUS");  break;
+    case TK_MINUS: s("TK_MINUS"); break;
+    case TK_STAR:  s("TK_STAR");  break;
+    case TK_SLASH: s("TK_SLASH"); break;
+    case TK_INT:   s("TK_INT");   break;
     default: s("UNKNOWN"); break;
   }
 

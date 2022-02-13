@@ -11,7 +11,13 @@ Create a self-compiling compiler. The language will be a dialect of C. It is boo
 - a linux system
 - graphviz (optional)
 
-## It can generate ASTs
+## Features
+
+### Token Visualization
+
+![tokenviz](doc/assets/tk_ex02.svg)
+
+### AST Visualization
 
 ![graphviz](doc/assets/nd_ex02.svg)
 
@@ -19,7 +25,7 @@ Create a self-compiling compiler. The language will be a dialect of C. It is boo
 
 ### Broad Scope
 
-- [ ] Lex Tokens
+- [X] Lex Tokens
 - [ ] Parse Tokens
 - [ ] Generate IR
 - [ ] Translate to Machine Code

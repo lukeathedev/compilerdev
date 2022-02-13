@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O2 -Wall -Wextra -pedantic -ggdb -I ${SRC_DIR}
+CFLAGS = -Wall -Wextra -pedantic -ggdb -I ${SRC_DIR}
 
 TARGET    = ${BUILD_DIR}/main
 
