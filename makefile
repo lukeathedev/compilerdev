@@ -19,7 +19,7 @@ run: all
 
 debug: all
 	valgrind --tool=memcheck --leak-check=yes --show-reachable=yes \
-	--num-callers=20 --track-fds=yes -s ./${TARGET}
+	--num-callers=20 --track-fds=yes --track-origins=yes -s ./${TARGET}
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c
 	@echo "[CC] $< -> $@"

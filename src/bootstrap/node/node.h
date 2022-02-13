@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+#include "typedef.h"
 #include "token/token.h"
 
 struct _NODE;
@@ -12,7 +13,6 @@ typedef struct _NODE {
   char data[DATA_SZ];
 } NODE;
 
-NODE* parse(TOKEN* tk_root);
 NODE* nodemk(char* data, NODE* left, NODE* right);
 void  nodegviz(NODE* root, FILE* stream);
 void  nodefree(NODE* node);

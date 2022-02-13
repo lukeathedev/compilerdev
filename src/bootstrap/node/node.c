@@ -5,10 +5,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-// NODE* parse(TOKEN* tk_root) {
-
-// }
-
 NODE* nodemk(char* data, NODE* left, NODE* right) {
   NODE* nd = (NODE* ) malloc(sizeof(NODE));
 
