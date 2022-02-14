@@ -1,0 +1,31 @@
+#include "file.h"
+#include "typedef.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Remember to free returned char*!
+char* load_file(char* filename) {
+  FILE* fp = fopen(filename, "r");
+  if (fp == NULL) {
+    perror("[ERROR] Could not open file");
+    exit(5);
+  }
+
+  // Get file size
+  fseek(fp, 0, SEEK_END);
+  u32 file_sz = ftell(fp);
+  rewind(fp);
+
+  char* buf = malloc((file_sz + 1) * sizeof(char));
+
+  u32 read = fread(buf, sizeof(char), file_sz, fp);
+  if (read != file_sz) {
+    exit(10);
+  }
+
+  fclose(fp);
+
+  buf[file_sz] = '\0';
+  return buf;
+}

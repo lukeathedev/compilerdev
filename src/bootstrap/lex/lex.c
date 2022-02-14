@@ -1,4 +1,5 @@
 #include "lex.h"
+#include "typedef.h"
 #include "token/token.h"
 
 #include <stddef.h>
@@ -16,7 +17,7 @@ static char _consume(char* c, char* source, u32* i) {
   return *c;
 }
 
-// #define peek(c) _peek(source, i)
+// #define peek() _peek(source, i)
 // static char _peek(char* source, u32 i) {
 //   return source[i+1];
 // }

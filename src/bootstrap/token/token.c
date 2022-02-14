@@ -45,7 +45,6 @@ char* token_get_type(TOKEN* token) {
   }
 
   #undef s
-
   return dest;
 }
 
@@ -74,9 +73,13 @@ void tokensgviz(TK_LIST* tokens, FILE* stream) {
 
 void tokensfree(TK_LIST* tokens) {
   for (u32 i = 0; i < tokens->len; ++i) {
+    // Free tokens themselves
     free(tokens->tks[i]);
   }
 
+  // Free token pointer list
   free(tokens->tks);
+
+  // Free struct TK_LIST
   free(tokens);
 }
