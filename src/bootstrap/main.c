@@ -9,6 +9,7 @@
 #include "token/token.h"
 
 #include "lex/lex.h"
+#include "parse/parse.h"
 
 // Remember to free returned char*!
 char* load_file(char* filename) {
@@ -47,7 +48,7 @@ i32 main() {
     exit(-1);
   }
 
-  NODE* ast_root = nd_ex02();
+  NODE* ast_root = parse(tokens);
   if (!ast_root) {
     fprintf(stderr, "[ERROR] Failed to generate AST\n");
     exit(-2);

@@ -9,12 +9,14 @@
 //      3   2
 NODE* nd_ex00() {
   NODE* root = nodemk(
+    ND_ADD,
     "+",
-    nodemk("4", NULL, NULL),
+    nodemk(ND_INT, "4", NULL, NULL),
     nodemk(
+      ND_MUL,
       "*",
-      nodemk("3", NULL, NULL),
-      nodemk("2", NULL, NULL)
+      nodemk(ND_INT, "3", NULL, NULL),
+      nodemk(ND_INT, "2", NULL, NULL)
     )
   );
 
@@ -29,13 +31,19 @@ NODE* nd_ex00() {
 //         9   3 
 NODE* nd_ex01() {
   NODE* root =
-  nodemk("+",
-    nodemk("2", NULL, NULL),
-    nodemk("-",
-      nodemk("10", NULL, NULL),
-      nodemk("*",
-        nodemk("9", NULL, NULL),
-        nodemk("3", NULL, NULL)
+  nodemk(
+    ND_ADD,
+    "+",
+    nodemk(ND_INT, "2", NULL, NULL),
+    nodemk(
+      ND_SUB,
+      "-",
+      nodemk(ND_INT, "10", NULL, NULL),
+      nodemk(
+        ND_MUL,
+        "*",
+        nodemk(ND_INT, "9", NULL, NULL),
+        nodemk(ND_INT, "3", NULL, NULL)
       )
     )  
   );
@@ -52,24 +60,29 @@ NODE* nd_ex01() {
 NODE* nd_ex02() {
   NODE* root =
   nodemk(
+    ND_ADD,
     "+",
     nodemk(
+      ND_SUB,
       "-",
       nodemk(
+        ND_MUL,
         "*",
-        nodemk("10", NULL, NULL),
-        nodemk("10", NULL, NULL)
+        nodemk(ND_INT, "10", NULL, NULL),
+        nodemk(ND_INT, "10", NULL, NULL)
       ),
-      nodemk("4", NULL, NULL)
+      nodemk(ND_INT, "4", NULL, NULL)
     ),
     nodemk(
+      ND_DIV,
       "/",
       nodemk(
+        ND_MUL,
         "*",
-        nodemk("3", NULL, NULL),
-        nodemk("2", NULL, NULL)
+        nodemk(ND_INT, "3", NULL, NULL),
+        nodemk(ND_INT, "2", NULL, NULL)
       ),
-      nodemk("2", NULL, NULL)
+      nodemk(ND_INT, "2", NULL, NULL)
     )
   );
 

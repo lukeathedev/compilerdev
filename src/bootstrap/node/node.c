@@ -5,14 +5,35 @@
 #include <string.h>
 #include <stdlib.h>
 
-NODE* nodemk(char* data, NODE* left, NODE* right) {
+NODE* nodemk(ND_TYPE type, char* data, NODE* left, NODE* right) {
   NODE* nd = (NODE* ) malloc(sizeof(NODE));
 
+  nd->type  = type;
   nd->left  = left;
   nd->right = right;
   strncpy(nd->data, data, DATA_SZ);
 
   return nd;
+}
+
+char* node_get_type(NODE* token) {
+  char* dest = malloc(DATA_SZ);
+  #define s(str) strncpy(dest, str, DATA_SZ - 1)
+
+  switch (token->type) {
+    case ND_NULL: s("TK_NULL"); break;
+    case ND_ADD:  s("ND_ADD");  break;
+    case ND_SUB:  s("ND_SUB");  break;
+    case ND_MUL:  s("ND_MUL");  break;
+    case ND_DIV:  s("ND_DIV");  break;
+    case ND_INT:  s("ND_INT");  break;
+
+    default: s("UNKNOWN"); break;
+  }
+
+  #undef s
+
+  return dest;
 }
 
 // I kind of blanked and decided to try this child thing
@@ -32,11 +53,17 @@ static void traverse(NODE* node, u64* i, FILE* stream) {
   if (*i == child) {
     fprintf(stream, "  // Leaf node\n");
   }
-  fprintf(stream, "  nd%06lu [label=\"%s\"];\n", *i, node->data);
+  fprintf(stream, "  nd%06lu [label=\"%s\"];\n",
+  *i, node->data);
 
   if (*i != child) {
-    fprintf(stream, "  nd%06lu -- nd%06lu;\n", *i, *i-1);
-    fprintf(stream, "  nd%06lu -- nd%06lu;\n", *i, child);
+    if (node->right) {
+      fprintf(stream, "  nd%06lu -- nd%06lu;\n", *i, *i-1);
+    }
+
+    if (node->left) {
+      fprintf(stream, "  nd%06lu -- nd%06lu;\n", *i, child);
+    }
   }
 
   *i += 1;

@@ -22,7 +22,7 @@ static char _consume(char* c, char* source, u32* i) {
 // }
 
 TK_LIST* lex(char* source) {
-  char c = 'A'; // any value should do
+  char c = '\xFF'; // any value should do
   u32 line = 1, col = 0;
 
   // TODO: expand data_sz to allow larger lexemes

@@ -3,6 +3,6 @@
 
 #include "node/node.h"
 
-NODE* parse(TOKEN* tk_root);
+NODE* parse(TK_LIST* tokens);
 
 #endif
