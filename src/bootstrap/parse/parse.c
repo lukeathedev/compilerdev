@@ -1,5 +1,6 @@
 #include "parse.h"
 #include "typedef.h"
+#include "error.h"
 #include "node/node.h"
 #include "node/test.h"
 
@@ -30,7 +31,18 @@ static i32 OP_PREC[6] = {
   0,  // ND_INT
 };
 
-static NODE* bin_expr(TK_LIST* tokens, u32* i, i32 p_prec) {
+i32 precedence(TOKEN* token) {
+  i32 prec = OP_PREC[tk2nd(token->type)];
+  if (prec == 0) {
+    fprintf(stderr, "[ERROR] Syntax error at '%s' [%u:%u]\n",
+    token->lxm, token->line, token->col);
+    exit(ERR_SYNTAX);
+  } 
+   
+  return prec;
+}
+
+static NODE* bin_expr(TK_LIST* tokens, u32* i, i32 prev_prec) {
   #define TK_CUR tokens->tks[*i] // Current token
 
   NODE* left =  NULL;
@@ -40,7 +52,7 @@ static NODE* bin_expr(TK_LIST* tokens, u32* i, i32 p_prec) {
   if (TK_CUR->type != TK_INT) {
     fprintf(stderr, "[ERROR] Expected integer, got '%s' at [%u:%u]\n",
     TK_CUR->lxm, TK_CUR->line, TK_CUR->col);
-    exit(99);
+    exit(ERR_SYNTAX);
   }
   left = nodemk(ND_INT, tokens->tks[*i]->lxm, NULL, NULL);
 
@@ -52,7 +64,7 @@ static NODE* bin_expr(TK_LIST* tokens, u32* i, i32 p_prec) {
 
   TOKEN* op_token = tokens->tks[*i];
 
-  while (OP_PREC[tk2nd(op_token->type)] > p_prec) {
+  while (precedence(op_token) > prev_prec) {
     *i += 1;
     right = bin_expr(tokens, i, OP_PREC[tk2nd(op_token->type)]);
     left = nodemk(tk2nd(op_token->type), op_token->lxm, left, right);

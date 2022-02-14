@@ -71,7 +71,9 @@ TK_LIST* lex(char* source) {
         }
 
         else {
-          tokenmk(tokens, TK_UNK, "unknown", line, col);
+          buf[0] = c;
+          tokenmk(tokens, TK_UNK, buf, line, col);
+          memset(buf, '\0', DATA_SZ);
         }
     }
   }

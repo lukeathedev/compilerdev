@@ -1,5 +1,6 @@
 #include "file.h"
 #include "typedef.h"
+#include "error.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +10,7 @@ char* load_file(char* filename) {
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {
     perror("[ERROR] Could not open file");
-    exit(5);
+    exit(ERR_BAD_FILE);
   }
 
   // Get file size
@@ -21,7 +22,7 @@ char* load_file(char* filename) {
 
   u32 read = fread(buf, sizeof(char), file_sz, fp);
   if (read != file_sz) {
-    exit(10);
+    exit(ERR_BAD_READ);
   }
 
   fclose(fp);

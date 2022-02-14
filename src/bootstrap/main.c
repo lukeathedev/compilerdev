@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "typedef.h"
+#include "error.h"
 
 #include "util/file.h"
 #include "node/node.h"
@@ -20,13 +21,13 @@ i32 main() {
   TK_LIST* tokens = lex(source);
   if (!tokens || !tokens->tks) {
     fprintf(stderr, "[ERROR] Failed to generate tokens\n");
-    exit(-1);
+    exit(ERR_LEX_FAIL);
   }
 
   NODE* ast_root = parse(tokens);
   if (!ast_root) {
     fprintf(stderr, "[ERROR] Failed to generate AST\n");
-    exit(-2);
+    exit(ERR_AST_FAIL);
   }
 
   clock_t end = clock();
@@ -44,5 +45,5 @@ i32 main() {
   nodefree(ast_root);
   tokensfree(tokens);
 
-  return 0;
+  exit(SUCCESS);
 }
