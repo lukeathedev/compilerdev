@@ -48,6 +48,5 @@ static NODE* bin_expr(TK_LIST* tokens, u32* i) {
 NODE* parse(TK_LIST* tokens) {
   u32 i = 0;
   NODE* root = bin_expr(tokens, &i);
-  // NODE* root = nd_ex00();
   return root;
 }

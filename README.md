@@ -26,7 +26,7 @@ Create a self-compiling compiler. The language will be a dialect of C. It is boo
 ### Broad Scope
 
 - [X] Lex Tokens
-- [ ] Parse Tokens
+- [X] Parse Tokens
 - [ ] Generate IR
 - [ ] Translate to Machine Code
 

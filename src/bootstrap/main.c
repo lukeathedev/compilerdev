@@ -12,6 +12,7 @@
 #include "parse/parse.h"
 
 // Remember to free returned char*!
+// TODO: move to a different file
 char* load_file(char* filename) {
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {

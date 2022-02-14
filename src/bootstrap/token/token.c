@@ -13,7 +13,8 @@ TK_LIST* tokensinit() {
   return tl;
 }
 
-void tokenmk(TK_LIST* tokens, TK_TYPE type, char* data, u32 line, u32 col) {
+void tokenmk(TK_LIST* tokens, TK_TYPE type,
+             char* data, u32 line, u32 col) {
   TOKEN* tk = (TOKEN* ) malloc(sizeof(TOKEN));
   
   tk->type = type;
