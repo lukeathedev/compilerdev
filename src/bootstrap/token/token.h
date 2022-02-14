@@ -17,6 +17,8 @@ typedef enum {
 typedef struct {
   TK_TYPE type;
   char    lxm[DATA_SZ]; // lexeme
+
+  u32 line; u32 col;
 } TOKEN;
 
 typedef struct {
@@ -25,7 +27,7 @@ typedef struct {
 } TK_LIST;
 
 TK_LIST* tokensinit();
-void     tokenmk(TK_LIST* tokens, TK_TYPE type, char* data);
+void     tokenmk(TK_LIST* tokens, TK_TYPE type, char* data, u32 line, u32 col);
 char*    token_get_type(TOKEN* token);
 void     tokensgviz(TK_LIST* tokens, FILE* stream);
 void     tokensfree(TK_LIST* tokens);

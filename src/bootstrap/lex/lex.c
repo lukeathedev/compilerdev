@@ -16,60 +16,65 @@ static char _consume(char* c, char* source, u32* i) {
   return *c;
 }
 
+// #define peek(c) _peek(source, i)
+// static char _peek(char* source, u32 i) {
+//   return source[i+1];
+// }
+
 TK_LIST* lex(char* source) {
-  // iterate per char
-  // classify each
-  u32 i = 0;
-  char c = source[i];
+  char c = 'A'; // any value should do
+  u32 line = 1, col = 0;
 
   // TODO: expand data_sz to allow larger lexemes
   char buf[DATA_SZ] = { 0 };
 
   TK_LIST* tokens = tokensinit();
 
-  while (c != '\0') {
-    c = source[i];
+  for (u32 i = 0; c != '\0'; ++i) {
+    col++; c = source[i];
     switch (c) {
       case '\0':
-      case '\n':
       case ' ':
       break;
 
+      case '\n':
+        line++; col = 0;
+      break;
+
       case '+':
-        tokenmk(tokens, TK_PLUS, "+");
+        tokenmk(tokens, TK_PLUS, "+", line, col);
       break;
 
       case '-':
-        tokenmk(tokens, TK_MINUS, "-");
+        tokenmk(tokens, TK_MINUS, "-", line, col);
       break;
 
       case '*':
-        tokenmk(tokens, TK_NULL, "*");
+        tokenmk(tokens, TK_STAR, "*", line, col);
       break;
 
       case '/':
-        tokenmk(tokens, TK_NULL, "/");
+        tokenmk(tokens, TK_SLASH, "/", line, col);
       break;
 
       default:
         if (is_number(c)) {
           // TODO: verify buffer won't overflow
           for (u32 j = 0; is_number(c); ++j) {
-            buf[j] = c; consume(c);
-          }
+            buf[j] = c; consume(c); col++;
+          } i--; col--;
 
-          tokenmk(tokens, TK_INT, buf);
+          tokenmk(tokens, TK_INT, buf, line, col);
           memset(buf, '\0', DATA_SZ);
         }
+
         else {
-          tokenmk(tokens, TK_UNK, "unknown");
+          tokenmk(tokens, TK_UNK, "unknown", line, col);
         }
     }
-    i += 1;
   }
 
   // Add null token to signify EOF
-  tokenmk(tokens, TK_NULL, "EOF");
-
+  tokenmk(tokens, TK_NULL, "EOF", line, col);
   return tokens;
 }

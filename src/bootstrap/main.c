@@ -10,15 +10,34 @@
 
 #include "lex/lex.h"
 
-i32 main() {
-  // FILE* fp = fopen("build/gv/ast.dot", "w");
-  // if (fp == NULL) {
-  //   perror("Could not open file 'build/gv/ast.dot'");
-  //   exit(-1);
-  // }
+// Remember to free returned char*!
+char* load_file(char* filename) {
+  FILE* fp = fopen(filename, "r");
+  if (fp == NULL) {
+    perror("[ERROR] Could not open file");
+    exit(5);
+  }
 
-  // char* source = "3 * 2 + 1"; // =7 (with prec), =9 (without)
-  char* source = "10 * 10 - 4 + 3 * 2 / 2";
+  // get sz
+  fseek(fp, 0, SEEK_END);
+  u32 fsz = ftell(fp);
+  rewind(fp);
+
+  char* buf = malloc((fsz + 1) * sizeof(char));
+
+  u32 read = fread(buf, sizeof(char), fsz, fp);
+  if (read != fsz) {
+    exit(10);
+  }
+
+  fclose(fp);
+
+  buf[fsz] = '\0';
+  return buf;
+}
+
+i32 main() {
+  char* source = load_file("test/input00");
 
   clock_t start = clock();
 
@@ -45,6 +64,7 @@ i32 main() {
 
   // Cleanup --------------------
 
+  free(source);
   nodefree(ast_root);
   tokensfree(tokens);
 

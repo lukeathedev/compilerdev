@@ -13,11 +13,13 @@ TK_LIST* tokensinit() {
   return tl;
 }
 
-void tokenmk(TK_LIST* tokens, TK_TYPE type, char* data) {
+void tokenmk(TK_LIST* tokens, TK_TYPE type, char* data, u32 line, u32 col) {
   TOKEN* tk = (TOKEN* ) malloc(sizeof(TOKEN));
   
   tk->type = type;
   strncpy(tk->lxm, data, DATA_SZ - 1);
+  tk->line = line;
+  tk->col  = col;
 
   // realloc tks
   tokens->tks = realloc(tokens->tks, sizeof(uptr) * (tokens->len + 1));
@@ -53,10 +55,11 @@ void tokensgviz(TK_LIST* tokens, FILE* stream) {
 
   // Not too pleased with the mallocs
   for (u32 i = 0; i < tokens->len; ++i) {
-    char *type = token_get_type(tokens->tks[i]);
+    TOKEN* tk = tokens->tks[i];
+    char *type = token_get_type(tk);
 
-    fprintf(stream, "\n  nd%06u [label=\"%06u|%s|'%s'\"];\n",
-    i, i, type, tokens->tks[i]->lxm);
+    fprintf(stream, "\n  nd%06u [label=\"[%u:%u]|%s|'%s'\"];\n",
+    i, tk->line, tk->col, type, tk->lxm);
 
     if (i != tokens->len - 1) {
       fprintf(stream, "  nd%06u -> nd%06u\n", i, i+1);
