@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 // Remember to free returned char*!
-char* load_file(char* filename) {
+char* read_file(char* filename) {
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {
     perror("[ERROR] Could not open file");

@@ -14,7 +14,7 @@
 
 // TODO: add error code definitions
 i32 main() {
-  char* source = load_file("test/input00");
+  char* source = read_file("test/input00");
 
   clock_t start = clock();
 

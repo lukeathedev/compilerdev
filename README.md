@@ -37,5 +37,5 @@ Create a self-compiling compiler. The language will be a dialect of C. It is boo
 - [ ] Functions
 - [ ] Loops
 - [ ] Conditionals
-- [ ] Arithmetic
+- [X] Arithmetic
 - [ ] Operators

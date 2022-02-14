@@ -17,10 +17,10 @@ static char _consume(char* c, char* source, u32* i) {
   return *c;
 }
 
-// #define peek() _peek(source, i)
-// static char _peek(char* source, u32 i) {
-//   return source[i+1];
-// }
+#define peek() _peek(source, i)
+static char _peek(char* source, u32 i) {
+  return source[i+1];
+}
 
 TK_LIST* lex(char* source) {
   char c = '\xFF'; // any value should do
@@ -55,7 +55,18 @@ TK_LIST* lex(char* source) {
       break;
 
       case '/':
-        tokenmk(tokens, TK_SLASH, "/", line, col);
+        if (peek() == '/') {
+          while (c != '\n' && c != '\0') {
+            consume(c);
+            if (c == '\n') {
+              line++; col = 0;
+            }
+          }
+        }
+
+        else {
+          tokenmk(tokens, TK_SLASH, "/", line, col);
+        }
       break;
 
       default:
