@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 
+// TODO: move this to a more appropriate place
 static ND_TYPE tk2nd(TK_TYPE type) {
   switch (type) {
     case TK_NULL:  return ND_NULL;
@@ -18,6 +19,7 @@ static ND_TYPE tk2nd(TK_TYPE type) {
   }
 }
 
+// TODO: use Pratt parsing to implement precedence
 static NODE* bin_expr(TK_LIST* tokens, u32* i) {
   NODE* left = NULL;
   

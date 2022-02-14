@@ -59,12 +59,13 @@ TK_LIST* lex(char* source) {
 
       default:
         if (is_number(c)) {
+          u32 pos = col;
           // TODO: verify buffer won't overflow
           for (u32 j = 0; is_number(c); ++j) {
             buf[j] = c; consume(c); col++;
           } i--; col--;
 
-          tokenmk(tokens, TK_INT, buf, line, col);
+          tokenmk(tokens, TK_INT, buf, line, pos);
           memset(buf, '\0', DATA_SZ);
         }
 
